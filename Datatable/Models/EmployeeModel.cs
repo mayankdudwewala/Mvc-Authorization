@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web;
+
+namespace Datatable.Models
+{
+    public class EmployeeModel
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int EmployeeID { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Enter Name")]
+        public string Name { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Enter Position")]
+        public string Position { get; set; }
+        public Nullable<int> Age { get; set; }
+        public Nullable<int> Salary { get; set; }
+    }
+}

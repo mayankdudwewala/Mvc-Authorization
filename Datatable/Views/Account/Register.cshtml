@@ -1,0 +1,94 @@
+﻿@model Datatable.Models.UserModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Registration Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/Content/fonts/linearicons/style.css">
+    <link rel="stylesheet" href="~/Content/Css/style.css">
+    <style>
+        .message {
+            color: red;
+            text-align: center;
+            
+        }
+        .btn-link {
+            color: blue;
+            padding: 45px;
+            
+        }
+        a:link {
+            color: red;
+        }
+
+        /* visited link */
+        a:visited {
+            color: maroon;
+        }
+
+        /* mouse over link */
+        a:hover {
+            color: darkblue;
+        }
+
+        /* selected link */
+        a:active {
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <div class="inner">
+            <img src="~/Content/Images/image-1.png" alt="" class="image-1">
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+            {
+                <h4 class="message">@ViewBag.Message</h4>
+                <h3>New Account?</h3>
+                <div class="form-holder">
+                    <span class="lnr lnr-user"></span>
+                    <input type="text" class="form-control" placeholder="FirstName" name="FirstName" required>
+                </div>
+                @Html.ValidationMessageFor(model => model.FirstName, null, new { @class = "abc" })
+                <div class="form-holder">
+                    <span class="lnr lnr-user"></span>
+                    <input type="text" class="form-control" placeholder="LastName" name="LastName" required>
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-envelope"></span>
+                    <input type="email" class="form-control" placeholder="Email" name="Email" required>
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-lock"></span>
+                    <input type="password" class="form-control" placeholder="Password" name="Password" required>
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-lock"></span>
+                    <input type="password" class="form-control" placeholder="Confirm Password" name="ConfirmPassword" required>
+                </div>
+                <div class="form-holder">
+                    <span class="lnr lnr-phone-handset"></span>
+                    <input type="text" class="form-control" placeholder="Phone No" name="Mobile" required>
+                </div>
+                <button>
+                    <span>Register</span>
+                </button>
+                <br/>
+                <a href="@Url.Action("Login","Account")" class="btn-link">Already Registered? Login Here</a>
+            }
+            <img src="~/Content/Images/image-2.png" alt="" class="image-2">
+        </div>
+
+    </div>
+
+    <script src="~/Content/JS/jquery-3.3.1.min.js"></script>
+    <script src="~/Content/JS/main.js"></script>
+</body>
+</html>
