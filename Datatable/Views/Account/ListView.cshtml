@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<Datatable.DBModel.Employee>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +17,6 @@
         .searchbox {
             width: 250px;
         }
-
 
         body {
             color: #566787;
@@ -288,7 +286,6 @@
 
             $('[data-toggle="tooltip"]').tooltip();
 
-
             var checkbox = $('table tbody input[type="checkbox"]');
             $("#selectAll").click(function () {
                 if (this.checked) {
@@ -312,8 +309,6 @@
                 console.log(text);
             });
         });
-
-
     </script>
 </head>
 <body>
@@ -384,7 +379,7 @@
                 <div class="hint-text">Showing <b>5</b> out of <b>@Model.Count()</b> entries</div>
                 <ul class="pagination">
                     @{
-                        var a = Math.Round(Model.Count() / 5d);
+                        var a = Math.Ceiling(Model.Count() / 5d);
                         <li class="page-item disabled"><a href="#">Previous</a></li>
                         for (int i = 1; i <= a; i++)
                         {

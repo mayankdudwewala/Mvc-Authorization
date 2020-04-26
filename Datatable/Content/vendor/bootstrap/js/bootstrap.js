@@ -34,7 +34,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  */
 
 var Util = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Private TransitionEnd Helpers
@@ -126,7 +125,6 @@ var Util = function ($) {
    */
 
   var Util = {
-
     TRANSITION_END: 'bsTransitionEnd',
 
     getUID: function getUID(prefix) {
@@ -186,7 +184,6 @@ var Util = function ($) {
  */
 
 var Alert = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -221,7 +218,6 @@ var Alert = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Alert = function () {
     function Alert(element) {
@@ -365,7 +361,6 @@ var Alert = function ($) {
  */
 
 var Button = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -402,7 +397,6 @@ var Button = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Button = function () {
     function Button(element) {
@@ -535,7 +529,6 @@ var Button = function ($) {
  */
 
 var Carousel = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -612,7 +605,6 @@ var Carousel = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Carousel = function () {
     function Carousel(element, config) {
@@ -895,7 +887,6 @@ var Carousel = function ($) {
       });
 
       if (Util.supportsTransitionEnd() && $(this._element).hasClass(ClassName.SLIDE)) {
-
         $(nextElement).addClass(orderClassName);
 
         Util.reflow(nextElement);
@@ -1042,7 +1033,6 @@ var Carousel = function ($) {
  */
 
 var Collapse = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -1096,7 +1086,6 @@ var Collapse = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Collapse = function () {
     function Collapse(element, config) {
@@ -1405,7 +1394,6 @@ var Collapse = function ($) {
  */
 
 var Dropdown = function ($) {
-
   /**
    * Check for Popper dependency
    * Popper - https://popper.js.org
@@ -1484,7 +1472,6 @@ var Dropdown = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Dropdown = function () {
     function Dropdown(element, config) {
@@ -1737,7 +1724,6 @@ var Dropdown = function ($) {
       var isActive = $(parent).hasClass(ClassName.SHOW);
 
       if (!isActive && (event.which !== ESCAPE_KEYCODE || event.which !== SPACE_KEYCODE) || isActive && (event.which === ESCAPE_KEYCODE || event.which === SPACE_KEYCODE)) {
-
         if (event.which === ESCAPE_KEYCODE) {
           var toggle = $(parent).find(Selector.DATA_TOGGLE)[0];
           $(toggle).trigger('focus');
@@ -1830,7 +1816,6 @@ var Dropdown = function ($) {
  */
 
 var Modal = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -1895,7 +1880,6 @@ var Modal = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Modal = function () {
     function Modal(element, config) {
@@ -2006,7 +1990,6 @@ var Modal = function ($) {
       $(this._dialog).off(Event.MOUSEDOWN_DISMISS);
 
       if (transition) {
-
         $(this._element).one(Util.TRANSITION_END, function (event) {
           return _this11._hideModal(event);
         }).emulateTransitionEnd(TRANSITION_DURATION);
@@ -2401,7 +2384,6 @@ var Modal = function ($) {
  */
 
 var ScrollSpy = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -2459,7 +2441,6 @@ var ScrollSpy = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var ScrollSpy = function () {
     function ScrollSpy(element, config) {
@@ -2715,7 +2696,6 @@ var ScrollSpy = function ($) {
  */
 
 var Tab = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -2759,7 +2739,6 @@ var Tab = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Tab = function () {
     function Tab(element) {
@@ -2885,7 +2864,6 @@ var Tab = function ($) {
       }
 
       if (element.parentNode && $(element.parentNode).hasClass(ClassName.DROPDOWN_MENU)) {
-
         var dropdownElement = $(element).closest(Selector.DROPDOWN)[0];
         if (dropdownElement) {
           $(dropdownElement).find(Selector.DROPDOWN_TOGGLE).addClass(ClassName.ACTIVE);
@@ -2967,7 +2945,6 @@ var Tab = function ($) {
  */
 
 var Tooltip = function ($) {
-
   /**
    * Check for Popper dependency
    * Popper - https://popper.js.org
@@ -3067,7 +3044,6 @@ var Tooltip = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Tooltip = function () {
     function Tooltip(element, config) {
@@ -3122,7 +3098,6 @@ var Tooltip = function ($) {
           context._leave(null, context);
         }
       } else {
-
         if ($(this.getTipElement()).hasClass(ClassName.SHOW)) {
           this._leave(null, this);
           return;
@@ -3298,7 +3273,6 @@ var Tooltip = function ($) {
       this._activeTrigger[Trigger.HOVER] = false;
 
       if (Util.supportsTransitionEnd() && $(this.tip).hasClass(ClassName.FADE)) {
-
         $(tip).one(Util.TRANSITION_END, complete).emulateTransitionEnd(TRANSITION_DURATION);
       } else {
         complete();
@@ -3640,7 +3614,6 @@ var Tooltip = function ($) {
  */
 
 var Popover = function ($) {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -3693,7 +3666,6 @@ var Popover = function ($) {
      * Class Definition
      * ------------------------------------------------------------------------
      */
-
   };
   var Popover = function (_Tooltip) {
     _inherits(Popover, _Tooltip);
@@ -3770,7 +3742,6 @@ var Popover = function ($) {
     _createClass(Popover, null, [{
       key: 'VERSION',
 
-
       // getters
 
       get: function get() {
@@ -3826,6 +3797,4 @@ var Popover = function ($) {
 
   return Popover;
 }(jQuery);
-
-
 })();

@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Datatable.DBModel;
+using Datatable.Models;
+using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net.Mail;
-using System.Web;
 using System.Web.Mvc;
-using System.Data.Entity;
-using Datatable.DBModel;
-using Datatable.Models;
 
 namespace Datatable.Controllers
 {
     public class AccountController : Controller
     {
-        UserDBEntities _dbContext = new UserDBEntities();
+        private UserDBEntities _dbContext = new UserDBEntities();
+
         public ActionResult Index()
         {
             return View();
-
         }
+
         public ActionResult Register()
         {
             UserModel userModel = new UserModel();
@@ -53,7 +52,6 @@ namespace Datatable.Controllers
                     ViewBag.Message = message;
                     return View("Success");
                 }
-
             }
             return View("Login");
         }
@@ -63,6 +61,7 @@ namespace Datatable.Controllers
             LoginModel LM = new LoginModel();
             return View(LM);
         }
+
         [HttpPost]
         public ActionResult Login(LoginModel LM)
         {
@@ -109,7 +108,6 @@ namespace Datatable.Controllers
         [NonAction]
         public void SendVerificationLinkEmail(string Email, string resetCode)
         {
-
             var link = "<a href='" + Url.Action("ResetPassword", "Account", new { email = Email, id = resetCode }, "http") + "'>Reset Password</a>";
 
             var fromEmail = new MailAddress("mayankdudwewala@gmail.com", "Mayank Dudwewala");
@@ -119,7 +117,6 @@ namespace Datatable.Controllers
             string subject = "Reset Password";
             string body = "Hi,<br/><br/>Please click on the link to reset your password" +
                           "<br/><br/><a href=" + link + "Reset Password link</a>";
-
 
             var smtp = new System.Net.Mail.SmtpClient
             {
@@ -139,11 +136,13 @@ namespace Datatable.Controllers
             })
                 smtp.Send(message);
         }
+
         [HttpGet]
         public ActionResult ForgotPassword()
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult ForgotPassword(string Email)
         {
@@ -161,12 +160,12 @@ namespace Datatable.Controllers
             else
             {
                 message = "Account Not Found";
-
             }
 
             ViewBag.Message = message;
             return View();
         }
+
         public ActionResult ResetPassword(string email, string id)
         {
             var user = _dbContext.Users.Where(m => m.ResetPasswordCode == id).FirstOrDefault();
@@ -181,6 +180,7 @@ namespace Datatable.Controllers
                 return HttpNotFound();
             }
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ResetPassword(ResetPasswordModel resetPasswordModel)
@@ -205,12 +205,12 @@ namespace Datatable.Controllers
             return View();
         }
 
-
         public ActionResult AddEmployee()
         {
             EmployeeModel emp = new EmployeeModel();
             return View(emp);
         }
+
         [HttpPost]
         public ActionResult AddEmployee(EmployeeModel emp)
         {
@@ -232,8 +232,8 @@ namespace Datatable.Controllers
                 ViewBag.Message = message;
                 return View("Admin");
             }
-
         }
+
         public ActionResult DeleteEmployee(int id)
         {
             Employee emp = _dbContext.Employees.Find(id);
@@ -242,7 +242,6 @@ namespace Datatable.Controllers
                 _dbContext.Employees.Remove(emp);
                 _dbContext.SaveChanges();
                 return RedirectToAction("Admin");
-
             }
             return View("Admin");
         }
@@ -257,6 +256,7 @@ namespace Datatable.Controllers
 
             return View(emp);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditEmployee(Employee emp)
@@ -269,6 +269,7 @@ namespace Datatable.Controllers
             }
             return HttpNotFound();
         }
+
         public ActionResult searchFilter(string search)
         {
             var record = _dbContext.Employees.Where(x => x.Name.Contains(search)).ToList();
