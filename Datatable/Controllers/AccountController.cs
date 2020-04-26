@@ -16,6 +16,7 @@ namespace Datatable.Controllers
         public ActionResult Index()
         {
             return View();
+
         }
         public ActionResult Register()
         {
@@ -68,7 +69,6 @@ namespace Datatable.Controllers
             var message = "";
             if (ModelState.IsValid)
             {
-
                 var condition = _dbContext.Users.Where(m => m.Email == LM.Email).FirstOrDefault();
                 if (_dbContext.Users.Where(m => m.Email == LM.Email && m.Password == LM.Password).FirstOrDefault() ==
                     null)
@@ -89,11 +89,8 @@ namespace Datatable.Controllers
                         Session["Email"] = LM.Email;
                         return View("Normal", LM);
                     }
-
                 }
-
             }
-
             return View();
         }
 
@@ -102,7 +99,6 @@ namespace Datatable.Controllers
             var list = _dbContext.Employees.Select(m => m).ToList();
             return View(list);
         }
-
 
         public ActionResult Logout()
         {
@@ -152,7 +148,6 @@ namespace Datatable.Controllers
         public ActionResult ForgotPassword(string Email)
         {
             string message = "";
-
             var account = _dbContext.Users.Where(m => m.Email == Email).FirstOrDefault();
             if (account != null)
             {
@@ -229,7 +224,7 @@ namespace Datatable.Controllers
                 newEmp.Salary = emp.Salary;
                 _dbContext.Employees.Add(newEmp);
                 _dbContext.SaveChanges();
-                return View("Admin");
+                return RedirectToAction("Admin");
             }
             else
             {
@@ -246,18 +241,20 @@ namespace Datatable.Controllers
             {
                 _dbContext.Employees.Remove(emp);
                 _dbContext.SaveChanges();
-                return View("Admin");
+                return RedirectToAction("Admin");
 
             }
             return View("Admin");
         }
+
         public ActionResult EditEmployee(int id)
         {
             Employee emp = _dbContext.Employees.Find(id);
             if (emp == null)
             {
-                return HttpNotFound();
+                return View("Login");
             }
+
             return View(emp);
         }
         [HttpPost]
@@ -268,9 +265,14 @@ namespace Datatable.Controllers
             {
                 _dbContext.Entry(emp).State = EntityState.Modified;
                 _dbContext.SaveChanges();
-                return View("Login");
+                return RedirectToAction("Admin");
             }
             return HttpNotFound();
+        }
+        public ActionResult searchFilter(string search)
+        {
+            var record = _dbContext.Employees.Where(x => x.Name.Contains(search)).ToList();
+            return View("Admin", record);
         }
     }
 }

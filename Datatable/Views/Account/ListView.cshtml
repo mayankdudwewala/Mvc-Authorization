@@ -14,6 +14,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <style type="text/css">
+
+        .searchbox {
+            width: 250px;
+        }
+
+
         body {
             color: #566787;
             background: #f5f5f5;
@@ -279,10 +285,10 @@
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
-            
+
             $('[data-toggle="tooltip"]').tooltip();
 
-           
+
             var checkbox = $('table tbody input[type="checkbox"]');
             $("#selectAll").click(function () {
                 if (this.checked) {
@@ -300,17 +306,33 @@
                     $("#selectAll").prop("checked", false);
                 }
             });
+            $("#box").click(function () {
+
+                var text = $("#searchbox").val();
+                console.log(text);
+            });
         });
+
+
     </script>
 </head>
 <body>
+
     <div class="container">
+        <h2>Manage <b>Employees</b></h2>
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Manage <b>Employees</b></h2>
+                        @using (Html.BeginForm("searchFilter", "Account", FormMethod.Get))
+                        {
+                            <div class="row">
+                                @Html.TextBox("search", null, new { @class = "searchbox form-control" })
+                                <input type="submit" value="Search" class="btn btn-default  btn-info" />
+                            </div>
+                        }
                     </div>
+
                     <div class="col-sm-6">
                         <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Employee</span></a>
                         <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>
@@ -350,7 +372,7 @@
                                 <td>@item.Age</td>
                                 <td>@item.Salary</td>
                                 <td>
-                                    <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" onclick="location.href='@Url.Action("EditEmployee", "Account",new { id =item.EmployeeID })'" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                    <a><i class="material-icons" onclick="location.href='@Url.Action("EditEmployee", "Account",new { id =item.EmployeeID })'" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                     <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" onclick="location.href='@Url.Action("DeleteEmployee", "Account",new { id =item.EmployeeID })'" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>
                             </tr>
@@ -359,7 +381,7 @@
                 </tbody>
             </table>
             <div class="clearfix">
-                <div class="hint-text">Showing <b>5</b> out of <b></b> entries</div>
+                <div class="hint-text">Showing <b>5</b> out of <b>@Model.Count()</b> entries</div>
                 <ul class="pagination">
                     <li class="page-item disabled"><a href="#">Previous</a></li>
                     <li class="page-item"><a href="#" class="page-link">1</a></li>
@@ -376,34 +398,35 @@
     <div id="addEmployeeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                @using (Html.BeginForm("AddEmployee", "Account", FormMethod.Post)) { 
-            <div class="modal-header">
-                <h4 class="modal-title">Add Employee</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control" name="Name" required>
+                @using (Html.BeginForm("AddEmployee", "Account", FormMethod.Post))
+                {
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Employee</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
-                    <div class="form-group">
-                        <label>Position</label>
-                        <input type="text" class="form-control" name="Position" required>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" name="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Position</label>
+                            <input type="text" class="form-control" name="Position" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Age</label>
+                            <input type="number" class="form-control" name="Age">
+                        </div>
+                        <div class="form-group">
+                            <label>Salary</label>
+                            <input type="number" class="form-control" name="Salary">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Age</label>
-                        <input type="number" class="form-control" name="Age">
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-success" value="Add">
                     </div>
-                    <div class="form-group">
-                        <label>Salary</label>
-                        <input type="number" class="form-control" name="Salary">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                    <input type="submit" class="btn btn-success" value="Add">
-                </div>
-               }
+                }
             </div>
         </div>
     </div>
@@ -412,7 +435,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
 
-                <form method="post" action="/Account/EditEmployee">
+                @using (Html.BeginForm("EditEmployee", "Account", FormMethod.Post))
+                {
                     <div class="modal-header">
                         <h4 class="modal-title">Edit Employee</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -424,24 +448,24 @@
                         </div>
                         <div class="form-group">
                             <label>Position</label>
-                            <input type="email" class="form-control" name="Position" required>
+                            <input type="text" class="form-control" name="Position" required>
                         </div>
                         <div class="form-group">
                             <label>Age</label>
                             <input type="number" class="form-control" name="Age">
-                            <div class="form-group">
-                                <label>Salary</label>
-                                <input type="number" class="form-control" name="Salary">
-                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Salary</label>
+                            <input type="number" class="form-control" name="Salary">
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                             <input type="submit" class="btn btn-info" value="Save">
                         </div>
-                </form>
-
-                </div>
+                    </div>
+                }
             </div>
+        </div>
     </div>
     <!-- Delete Modal HTML -->
     <div id="deleteEmployeeModal" class="modal fade">
