@@ -61,7 +61,6 @@ namespace Datatable.Controllers
             LoginModel LM = new LoginModel();
             return View(LM);
         }
-
         [HttpPost]
         public ActionResult Login(LoginModel LM)
         {
@@ -267,12 +266,13 @@ namespace Datatable.Controllers
                 _dbContext.SaveChanges();
                 return RedirectToAction("Admin");
             }
+            
             return HttpNotFound();
         }
 
         public ActionResult searchFilter(string search)
         {
-            var record = _dbContext.Employees.Where(x => x.Name.Contains(search)).ToList();
+            var record = _dbContext.Employees.Where(x => x.Name.Contains(search) || x.Position.Contains(search)).ToList();
             return View("Admin", record);
         }
     }

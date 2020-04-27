@@ -303,12 +303,17 @@
                     $("#selectAll").prop("checked", false);
                 }
             });
-            $("#box").click(function () {
 
-                var text = $("#searchbox").val();
-                console.log(text);
-            });
         });
+        //$("#confirmDelete").click(function () {
+        //    var val = $("#idvalue").val();
+        //    console.log(val);
+        //});
+
+        function confirmDelete() {
+            var a = $(".field").val();
+            console.log(a);
+        }
     </script>
 </head>
 <body>
@@ -355,7 +360,8 @@
                     {
                         foreach (var item in Model)
                         {
-                            <tr>
+
+                            <tr ondblclick="location.href='@Url.Action("EditEmployee", "Account", new { id = item.EmployeeID })'">
                                 <td>
                                     <span class="custom-checkbox">
                                         <input type="checkbox" id="checkbox1" name="options[]" value="1">
@@ -366,9 +372,14 @@
                                 <td>@item.Position</td>
                                 <td>@item.Age</td>
                                 <td>@item.Salary</td>
+
                                 <td>
                                     <a><i class="material-icons" onclick="location.href='@Url.Action("EditEmployee", "Account", new { id = item.EmployeeID })'" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                    <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" onclick="location.href='@Url.Action("DeleteEmployee", "Account", new { id = item.EmployeeID })'" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                    <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                    <input type="hidden" class="field" value="@item.EmployeeID" />
+
+                                    
+                                    
                                 </td>
                             </tr>
                         }
@@ -380,13 +391,25 @@
                 <ul class="pagination">
                     @{
                         var a = Math.Ceiling(Model.Count() / 5d);
-                        <li class="page-item disabled"><a href="#">Previous</a></li>
-                        for (int i = 1; i <= a; i++)
+                        if (Model.Count() <= 5)
                         {
-                            <li class="page-item"><a href="#" class="page-link">@i</a></li>
+                            for (int i = 1; i <= a; i++)
+                            {
+                                <li class="page-item"><a href="#" class="page-link">@i</a></li>
+                            }
+
+                        }
+                        else
+                        {
+                            <li class="page-item disabled"><a href="#">Previous</a></li>
+                            for (int i = 1; i <= a; i++)
+                            {
+                                <li class="page-item"><a href="#" class="page-link">@i</a></li>
+                            }
+
+                            <li class="page-item"><a href="#" class="page-link">Next</a></li>
                         }
 
-                        <li class="page-item"><a href="#" class="page-link">Next</a></li>
                     }
                 </ul>
             </div>
@@ -429,42 +452,6 @@
         </div>
     </div>
     <!-- Edit Employee  -->
-    <div id="editEmployeeModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                @using (Html.BeginForm("EditEmployee", "Account", FormMethod.Post))
-                {
-                    <div class="modal-header">
-                        <h4 class="modal-title">Edit Employee</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" class="form-control" name="Name" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Position</label>
-                            <input type="text" class="form-control" name="Position" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Age</label>
-                            <input type="number" class="form-control" name="Age">
-                        </div>
-                        <div class="form-group">
-                            <label>Salary</label>
-                            <input type="number" class="form-control" name="Salary">
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-info" value="Save">
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    </div>
     <!-- Delete Modal HTML -->
     <div id="deleteEmployeeModal" class="modal fade">
         <div class="modal-dialog">
@@ -480,7 +467,7 @@
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                        <input type="submit" class="btn btn-danger" value="Delete">
+                        <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete</button>
                     </div>
                 </form>
             </div>
