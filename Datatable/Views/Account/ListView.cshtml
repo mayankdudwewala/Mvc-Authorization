@@ -311,8 +311,10 @@
         //});
 
         function confirmDelete() {
-            var a = $(".field").val();
+            var a = $("#field").val();
+            var b = $(this).closest('td').find('.field').html();
             console.log(a);
+            console.log(b);
         }
     </script>
 </head>
@@ -372,14 +374,10 @@
                                 <td>@item.Position</td>
                                 <td>@item.Age</td>
                                 <td>@item.Salary</td>
-
                                 <td>
                                     <a><i class="material-icons" onclick="location.href='@Url.Action("EditEmployee", "Account", new { id = item.EmployeeID })'" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                     <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                                    <input type="hidden" class="field" value="@item.EmployeeID" />
-
-                                    
-                                    
+                                    <input type="hidden" id="field" value="@item.EmployeeID" />
                                 </td>
                             </tr>
                         }
@@ -467,7 +465,7 @@
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                        <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete</button>
+                        <button type="button" class="btn btn-danger" onclick="confirmDelete(this)">Delete</button>
                     </div>
                 </form>
             </div>

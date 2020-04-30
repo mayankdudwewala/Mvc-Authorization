@@ -61,6 +61,7 @@ namespace Datatable.Controllers
             LoginModel LM = new LoginModel();
             return View(LM);
         }
+
         [HttpPost]
         public ActionResult Login(LoginModel LM)
         {
@@ -266,7 +267,7 @@ namespace Datatable.Controllers
                 _dbContext.SaveChanges();
                 return RedirectToAction("Admin");
             }
-            
+
             return HttpNotFound();
         }
 
@@ -274,6 +275,24 @@ namespace Datatable.Controllers
         {
             var record = _dbContext.Employees.Where(x => x.Name.Contains(search) || x.Position.Contains(search)).ToList();
             return View("Admin", record);
+        }
+
+        public ActionResult JsonData()
+        {
+            //var user = from s in _dbContext.Users select s;
+            //return Json(user, "user", JsonRequestBehavior.AllowGet);
+            return View();
+            
+        }
+        public ActionResult Map()
+        {
+           return View();
+
+        }
+        public ActionResult Image()
+        {
+            return View();
+
         }
     }
 }
